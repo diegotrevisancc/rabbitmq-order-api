@@ -1,6 +1,7 @@
 package dev.trevisan.order.api.controller;
 
 import dev.trevisan.order.api.entity.Order;
+import dev.trevisan.order.api.service.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -20,6 +21,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/orders")
 public class OrderController {
     private final Logger logger = LoggerFactory.getLogger(OrderController.class);
+    private final OrderService orderService;
+
+    public OrderController(OrderService orderService) {
+        this.orderService = orderService;
+    }
 
     @Operation(summary = "Create new order", description = "Contains all operations needed to create new orders"
     , responses = @ApiResponse(responseCode = "201", description = "Resource created with success",
@@ -28,6 +34,7 @@ public class OrderController {
     @PostMapping
     public ResponseEntity<Order> createOrder(@RequestBody Order order) {
         logger.info("Order received: {}", order.toString());
+        order = orderService.queueOrder(order);
         return ResponseEntity.status(HttpStatus.CREATED).body(order); // 201
     }
 }
