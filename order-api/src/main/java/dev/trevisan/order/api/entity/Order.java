@@ -19,7 +19,7 @@ public class Order {
     private List<OrderItem> items;
     private Double sum;
     private String customerEmail;
-    private Status status;
+    private Status status = Status.PROCESSING;
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime time;
+    private LocalDateTime time = LocalDateTime.now();
 }
