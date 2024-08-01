@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   rabbitmq:
-    env_file: "keys.env"
+    env_file: "rabbit-keys.env"
     image: rabbitmq:3.10.5-management
     container_name: rabbitmq
     ports:
@@ -19,6 +19,17 @@ services:
       - '1025:1025'
       - '8025:8025'
 
+  postgres:
+    image: postgres:15.7
+    restart: unless-stopped
+    container_name: postgresql-15.7
+    env_file: "postgres-keys.env"
+    ports:
+      - '5433:5433'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
 volumes:
   rabbitmq_data:
   rabbitmq_log:
+  postgres_data:
