@@ -9,6 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class OrderService {
     private final ProductService productService;
@@ -28,10 +30,10 @@ public class OrderService {
 
     public void save(Order order) {
         productService.save(order.getItems());
-        orderItemService.save(order.getItems());
+        List<OrderItem> items = orderItemService.save(order.getItems());
         orderRepository.save(order);
 
-        orderItemService.updatedOrderItem(order.getItems(), order);
+        orderItemService.updatedOrderItem(items, order);
     }
 
     public void save(OrderItem orderItem) {
