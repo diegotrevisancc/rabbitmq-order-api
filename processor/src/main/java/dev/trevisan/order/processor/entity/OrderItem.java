@@ -16,8 +16,8 @@ import java.util.UUID;
 @Entity
 @Table(name = "order_item")
 public class OrderItem {
-    @Id
 
+    @Id
     private UUID id = UUID.randomUUID();
 
     @ManyToOne
